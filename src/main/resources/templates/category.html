@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin-template}">
+
+<head>
+<title>DashBoard</title>
+
+<th:block layout:fragment="css">
+	<!-- Custom styles for this page -->
+	<link th:href="@{/admin/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+</th:block>
+</head>
+
+<body>
+
+	<div layout:fragment="content-body" class="container-fluid">
+		<div th:if="${operation == 'ok'}" class="alert alert-success operationNotifaction">
+			Operation Success!
+			<span class="secondCounter"></span>
+		</div>
+		<div th:if="${operation == 'fail'}" class="alert alert-danger operationNotifaction">Operation fail!</div>
+
+		<div class="container-fluid d-flex justify-content-between">
+			<div class="">
+				<!-- Page Heading -->
+				<h1 class="h3 mb-2 text-gray-800">Category List</h1>
+			</div>
+			<div class=" ">
+				<div class="">
+					<div>
+						<a th:href="@{/category/add}" class="btn btn-success px-3">Create New</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- DataTales Example -->
+		<div class="card shadow mb-4">
+			<div class="card-header py-3">
+				<h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+						<div class="row">
+							<div class="col-sm-12">
+								<table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+									<thead>
+										<tr role="row">
+											<th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="ID: activate to sort column descending">ID</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Photo: activate to sort column ascending">Photo</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Name</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Price: activate to sort column ascending">Created Date</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Description: activate to sort column ascending">Updated Date</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Description: activate to sort column ascending">Products</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">Action</th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr>
+											<th rowspan="1" colspan="1">ID</th>
+											<th rowspan="1" colspan="1">Photo</th>
+											<th rowspan="1" colspan="1">Name</th>
+											<th rowspan="1" colspan="1">Created Date</th>
+											<th rowspan="1" colspan="1">Updated Date</th>
+											<th rowspan="1" colspan="1">Products</th>
+											<th rowspan="1" colspan="1">Action</th>
+
+										</tr>
+									</tfoot>
+									<tbody>
+										<th:block th:each="cat : ${categoryList}">
+											<tr role="row">
+												<th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="ID: activate to sort column descending" th:text="${cat.id}"></th>
+												<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Photo: activate to sort column ascending">
+													<img th:src="${cat.photoPath}" th:alt="${cat.photoPath}" width="129" />
+												</th>
+												<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" th:text="${cat.name}"></th>
+												<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Created at: activate to sort column ascending" th:text="${cat.created_at}"></th>
+												<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" th:text="${cat.updated_at}"></th>
+												<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" th:text="${cat.products.size}"></th>
+												<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+													<a th:href="@{'/category/edit/' + ${cat.id}}" class="btn btn-success">Edit</a>
+													<th:block th:if="${cat.noProducts}">
+														<a href="#" data-toggle="modal" data-target="#deleteModal" th:data-id="${cat.id}" class="delete-btn btn btn-danger">Delete</a>
+													</th:block>
+												</th>
+											</tr>
+										</th:block>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Delete Modal-->
+		<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">Are You sure? Do you really want to delete this?</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+						<a class="confirm-delete-btn btn btn-primary" href="#">Delete</a>
+						<form class="delete-form" th:action="@{/category/delete}" method="post">
+							<input type="hidden" value="0" name="id" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<th:block layout:fragment="js">
+		<!-- Page level plugins -->
+		<script th:src="@{/admin/vendor/datatables/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/admin/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+		<!-- Page level custom scripts -->
+		<script th:src="@{/admin/js/demo/datatables-demo.js}"></script>
+
+		<script th:src="@{/admin/js/deleteform.js}" type="text/javascript">
+			
+		</script>
+		<script th:src="@{/admin/js/alertNotification.js}" th:inline="javascript">
+			
+		</script>
+	</th:block>
+</body>
+
+</html>

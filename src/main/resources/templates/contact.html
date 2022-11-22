@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{storefront-template}"
+	th:with="sub_title_1='Contact Us', sub_title_2='Contact'">
+
+<head>
+<title>Title</title>
+
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{/admin/css/customer-support.css}" />
+</th:block>
+</head>
+<body>
+	<section layout:fragment="content-body" class="ftco-section contact-section bg-light">
+		<div class="container">
+			<div class="row d-flex mb-5 contact-info">
+				<div class="w-100"></div>
+				<div class="col-md-3 d-flex">
+					<div class="info bg-white p-4">
+						<p>
+							<span>Address:</span>
+							198 West 21th Street, Suite 721 New York NY 10016
+						</p>
+					</div>
+				</div>
+				<div class="col-md-3 d-flex">
+					<div class="info bg-white p-4">
+						<p>
+							<span>Phone:</span>
+							<a href="tel://1234567920">+ 1235 2355 98</a>
+						</p>
+					</div>
+				</div>
+				<div class="col-md-3 d-flex">
+					<div class="info bg-white p-4">
+						<p>
+							<span>Email:</span>
+							<a href="mailto:info@yoursite.com">info@yoursite.com</a>
+						</p>
+					</div>
+				</div>
+				<div class="col-md-3 d-flex">
+					<div class="info bg-white p-4">
+						<p>
+							<span>Website</span>
+							<a href="#">yoursite.com</a>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="row my-3">
+				<a href="#chat" data-hide="1" id="btn-open-messages" class="btn btn-primary mx-3">
+					[
+					<span id="chat-noti" th:text="${chatRoom.unreadChatMessageCountSendBySiteOwner}"></span>
+					] Messages
+				</a>
+			</div>
+
+			<div class="row">
+				<div id="map-area" class="col">
+					<div class="mapouter">
+						<div class="gmap_canvas">
+							<iframe width="100%" height="400px" id="gmap_canvas" src="https://maps.google.com/maps?q=Hmawbi&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0"
+								marginwidth="0"></iframe>
+							<a href="https://putlocker-is.org">putlocker</a>
+							<br>
+							<style>
+.mapouter {
+	position: relative;
+	text-align: right;
+	height: 400px;
+	width: 100%;
+}
+</style>
+							<a href="https://www.embedgooglemap.net">embedgooglemap.net</a>
+							<style>
+.gmap_canvas {
+	overflow: hidden;
+	background: none !important;
+	height: 400px;
+	width: 100%;
+}
+</style>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="chat" class="row">
+				<div class="col">
+					<div>
+						<div class="py-2 px-4 border-bottom d-none d-lg-block">
+							<div class="d-flex align-items-center py-1">
+								<div class="position-relative">
+									<div class="rounded-circle mr-1 bg-primary d-flex justify-content-center align-items-center text-white" style="width: 40px; height: 40px;">M</div>
+								</div>
+								<div class="flex-grow-1 pl-3">
+									<strong>Site Admin</strong>
+								</div>
+								<div>
+									<a href="" id="btn-close-chat-message-area" class="btn btn-primary">Cancel</a>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="position-relative">
+							<div class="chat-messages p-4" style="height: 450px;"></div>
+						</div>
+
+						<div class="flex-grow-0 py-3 px-4 border-top">
+							<div class="input-group">
+								<input id="msg-input" type="text" class="form-control" placeholder="Type your message">
+								<button id="btn-send-msg" class="btn btn-primary ml-3" style="width: 100px;">Send</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		</div>
+	</section>
+
+	<th:block layout:fragment="js">
+		<script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+		<script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
+		<script type="text/javascript" th:src="@{/app/js/chatUI.js}"></script>
+		<script th:src="@{/app/js/customer-chat.js}"></script>
+
+
+	</th:block>
+</body>
+</html>

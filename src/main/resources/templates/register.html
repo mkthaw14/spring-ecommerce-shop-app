@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{storefront-template}"
+	th:with="sub_title_1='register', sub_title_2='register'">
+
+<head>
+<title>Register</title>
+</head>
+<body>
+	<section layout:fragment="content-body" class="ftco-section">
+		<div class="container">
+			<div class="row d-flex justify-content-center">
+				<h3>Register</h3>
+			</div>
+			<hr />
+
+			<div class="row d-flex justify-content-center">
+				<form th:action="@{/shop/user/add}" method="POST" class="form" th:object="${user}">
+					<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+						<ul>
+							<li th:each="err: ${#fields.allErrors}" th:text="${err}"></li>
+						</ul>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div class="mb-3">
+								<label for="" class="form-label">Name</label>
+								<input type="text" class="form-control" placeholder="Your Name" required="required" th:field="*{name}" />
+							</div>
+						</div>
+						<div class="col">
+							<div class="mb-3">
+								<label for="" class="form-label">Phone</label>
+								<input type="text" class="form-control" placeholder="phone" required="required" th:field="*{phone}" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div class="mb-3">
+								<label for="" class="form-label">Email</label>
+								<input type="email" class="form-control" placeholder="Your Email" required="required" th:field="*{email}" />
+							</div>
+						</div>
+						<div class="col">
+							<div class="mb-3">
+								<label for="" class="form-label">Password</label>
+								<input type="text" class="form-control" placeholder="password" required="required" th:field="*{password}" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div class="mb-3">
+								<label for="" class="form-label">Address</label>
+								<input type="text" class="form-control" placeholder="Address" required="required" th:field="*{address}" />
+							</div>
+						</div>
+					</div>
+					<div class="row d-flex justify-content-center">
+						<button class="btn btn-primary px-5 ">Register</button>
+					</div>
+
+				</form>
+			</div>
+
+		</div>
+	</section>
+
+	<th:block layout:fragment="js">
+		<script th:src="@{/app/js/cart.js}"></script>
+		<script th:src="@{/app/js/cartdetail.js}"></script>
+		<script th:src="@{/app/js/checkout.js}"></script>
+	</th:block>
+</body>
+</html>

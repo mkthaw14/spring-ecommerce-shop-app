@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{storefront-template}"
+	th:with="sub_title_1='My Cart', sub_title_2='Cart'">
+
+<head>
+<title>Cart</title>
+</head>
+<body>
+	<section layout:fragment="content-body" class="ftco-section ftco-cart">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 ftco-animate fadeInUp ftco-animated">
+					<div class="cart-list">
+						<table class="table">
+							<thead class="thead-primary">
+								<tr class="text-center">
+									<th>&nbsp;</th>
+									<th>Product</th>
+									<th>Price</th>
+									<th>Quantity</th>
+									<th>Total</th>
+								</tr>
+							</thead>
+							<tbody class="product-row">
+								
+								<!-- END TR-->
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div
+					class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate fadeInUp ftco-animated">
+					<div class="cart-total mb-3">
+						<h3>Cart Totals</h3>
+						<p class="d-flex">
+							<span>Total Product</span> <span class="total-product"></span>
+						</p>
+						<p class="d-flex">
+							<span>Delivery</span> <span>Ks. 0.00</span>
+						</p>
+						<p class="d-flex">
+							<span>Discount</span> <span>Ks. 0.00</span>
+						</p>
+						<hr>
+						<p class="d-flex total-price">
+							<span>Total</span> <span class="grand-total"></span>
+						</p>
+					</div>
+					<p class="text-center">
+						<p class="btn btn-primary py-3 px-4 checkout-btn">Proceed
+							to Checkout</p>
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<th:block layout:fragment="js">
+		<script type="text/javascript" th:src="@{/app/js/cart.js}"></script>
+		<script type="text/javascript" th:src="@{/app/js/cartdetail.js}"></script>
+	</th:block>
+</body>
+</html>

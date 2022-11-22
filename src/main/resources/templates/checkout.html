@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	layout:decorate="~{storefront-template}"
+	th:with="sub_title_1='checkout', sub_title_2='checkout'">
+
+<head>
+<title>Checkout</title>
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+</head>
+<body>
+	<section layout:fragment="content-body" class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-xl-8 ftco-animate fadeInUp ftco-animated">
+					<form action="#" class="">
+						<h3 class="mb-4 billing-heading">Billing Details</h3>
+						<div class="row align-items-end">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="name">Name</label> <input type="text"
+										class="form-control" placeholder="Enter name"
+										th:value="${name}" id="r-name">
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="email">Email</label> <input type="text"
+										class="form-control" placeholder="Enter email"
+										th:value="${email}" id="r-email">
+								</div>
+							</div>
+
+
+							<div class="w-100"></div>
+
+
+							<div class="w-100"></div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="phone">Phone</label> <input type="text"
+										class="form-control" placeholder=""
+										th:value="${phone}" id="r-phone">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="address">Address</label> <input type="text"
+										class="form-control"
+										placeholder="Address"
+										th:value="${address}" id="r-address">
+								</div>
+							</div>
+
+							<div class="w-100"></div>
+
+						</div>
+					</form>
+					<!-- END -->
+
+					<div class="row mt-5 pt-3 d-flex justify-content-center">
+						<div class="col-md-6 d-flex">
+							<div class="cart-detail cart-total bg-light p-3 p-md-4">
+								<h3 class="billing-heading mb-4">Cart Total</h3>
+								<p class="d-flex">
+									<span>Product Total</span> <span class="total-product">$20.60</span>
+								</p>
+								<p class="d-flex">
+									<span>Delivery</span> <span>Ks. 0</span>
+								</p>
+								<p class="d-flex">
+									<span>Discount</span> <span>Ks. 0</span>
+								</p>
+								<hr>
+								<p class="d-flex total-price">
+									<span>Total</span> <span class="grand-total"> </span>
+								</p>
+								<p class="mt-5">
+									<a href="#" class="btn btn-primary py-3 px-4 place-order-btn">Place an
+										order</a>
+								</p>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- .col-md-8 -->
+			</div>
+		</div>
+	</section>
+	
+	<th:block layout:fragment = "js">
+		<script th:src="@{/app/js/cart.js}"></script>
+		<script th:src="@{/app/js/cartdetail.js}"></script>
+		<script th:src="@{/app/js/checkout.js}"></script>
+	</th:block>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin-template}">
+
+<head>
+<title>DashBoard</title>
+
+<th:block layout:fragment="css">
+	<!-- Custom styles for this page -->
+	<link th:href="@{/admin/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+</th:block>
+</head>
+
+<body>
+
+	<div layout:fragment="content-body" class="container-fluid">
+		<div th:if="${operation == 'ok'}" class="alert alert-success operationNotifaction">
+			Operation Success!
+			<span class="secondCounter"></span>
+		</div>
+		<div th:if="${operation == 'fail'}" class="alert alert-danger operationNotifaction">Operation fail!</div>
+
+		<div class="container-fluid row">
+			<div class="col-4">
+				<!-- Page Heading -->
+				<h1 class="h3 mb-2 text-gray-800">
+					Order Number : #
+					<th:block th:text="${order.id}"></th:block>
+				</h1>
+			</div>
+			<div class="col-8 ">
+				<div class="d-flex justify-content-end">
+					<form class="order-update-form d-none" th:action="@{/orders/update-status}" th:method="post" th:object="${order}">
+
+						<input type="hidden" th:field="*{id}" />
+						<input type="hidden" value="delivered" name="order-status" />
+						<select id="status-select" th:field="*{status}">
+							<th:block th:each="st : ${T(com.mmit.model.entity.OrderStatus).values()}">
+								<option th:value="${st}" th:text="${st}">
+							</th:block>
+						</select>
+					</form>
+					<div th:if="${order.isPending}">
+						<a href="#" th:data-status="delivered" class="order-delivered btn btn-warning mx-3">Deliver Order</a>
+					</div>
+
+					<div th:if="${order.isDelivered}">
+						<a href="#" th:data-status="received" class="order-received btn btn-warning mx-3">Customer Received</a>
+					</div>
+					<div th:if="${order.notReceivedAndNotCancelled}">
+						<a href="#" th:data-status="cancelled" class="order-cancel btn btn-danger mx-3">Cancel Order</a>
+					</div>
+					<div th:if="${order.receivedOrCancelled}">
+						<a href="#" data-toggle="modal" data-target="#deleteModal" th:data-id="${order.id}" class="delete-btn btn btn-danger mx-3">Delete</a>
+					</div>
+					<div>
+						<a th:href="@{/orders}" class="btn btn-success mx-3">Back To Order List</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid mt-5">
+			<div class="">
+				<div class="card-deck row">
+					<div class="card shadow col-8">
+						<div class="card-header">
+							<h5 class="card-title">Product Summary</h5>
+						</div>
+						<div class="card-body">
+							<table class="table">
+								<thead>
+									<tr>
+										<td>Product ID</td>
+										<td>Name</td>
+										<td>Quantity</td>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:each="orderItem : ${order.orderItems}">
+										<tr>
+											<td th:text="${orderItem.product.id}"></td>
+											<td>
+												<th:block th:text="${orderItem.product.name}">
+
+												</th:block>
+											</td>
+											<td th:text="${orderItem.quantity}"></td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+					<div class="card shadow col-4">
+						<div class="card-header">
+							<h5 class="card-title">Order Summary</h5>
+						</div>
+						<div class="card-body">
+							<div class="d-flex justify-content-between mb-3">
+								<div class="">Order Date</div>
+								<div class="" th:text="${order.createdDate}"></div>
+							</div>
+							<div class="d-flex justify-content-between mb-3">
+								<div class="">Order Status</div>
+								<div class="text-primary" th:text="${order.status}"></div>
+							</div>
+							<div class="d-flex justify-content-between mb-3">
+								<div class="">Last Updated Time</div>
+								<div class="" th:text="${order.updatedDate}"></div>
+							</div>
+							<div class="d-flex justify-content-between mb-3">
+								<div class="">Amount</div>
+								<div class="" th:text="${order.amount} + ' Ks'"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+			<hr />
+			<div class=" mt-5">
+				<div class="card-deck row">
+					<div class="card shadow col-8">
+						<div class="card-header">
+							<h5 class="card-title">Customer Detail</h5>
+						</div>
+						<div class="card-body">
+							<div class="d-flex justify-content-between">
+								<div>Customer Name</div>
+								<div th:text="${order.customer.name}"></div>
+							</div>
+							<hr />
+							<div class="d-flex justify-content-between">
+								<div>Email Address</div>
+								<div th:text="${order.customer.email}"></div>
+							</div>
+							<hr />
+							<div class="d-flex justify-content-between">
+								<div>Phone Number</div>
+								<div th:text="${order.customer.phone}"></div>
+							</div>
+							<hr />
+							<div class="d-flex justify-content-between">
+								<div>Address</div>
+								<div th:text="${order.customer.address}"></div>
+							</div>
+							<hr />
+						</div>
+					</div>
+					<div class="card shadow col-4">
+						<div class="card-header">
+							<h5 class="card-title">Shipping Address</h5>
+						</div>
+						<div class="card-body">
+							<div class="d-flex justify-content-between">
+								<div>Name</div>
+								<div th:text="${order.shippingName}"></div>
+							</div>
+							<hr />
+							<div class="d-flex justify-content-between">
+								<div>Email Address</div>
+								<div th:text="${order.shippingEmail}"></div>
+							</div>
+							<hr />
+							<div class="d-flex justify-content-between">
+								<div>Phone Number</div>
+								<div th:text="${order.shippingPhone}"></div>
+							</div>
+							<hr />
+							<div class="d-flex justify-content-between">
+								<div>Address</div>
+								<div th:text="${order.shippingAddress}"></div>
+							</div>
+							<hr />
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- Delete Modal-->
+		<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">Are You sure? Do you really want to delete this?</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+						<a class="confirm-delete-btn btn btn-primary" href="#">Delete</a>
+						<form class="delete-form" th:action="@{/order/delete}" method="post">
+							<input type="hidden" value="0" name="id" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<th:block layout:fragment="js">
+		<!-- Page level plugins -->
+		<script th:src="@{/admin/vendor/datatables/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/admin/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+		<!-- Page level custom scripts -->
+		<script th:src="@{/admin/js/demo/datatables-demo.js}"></script>
+
+		<script th:src="@{/admin/js/deleteform.js}" type="text/javascript">
+			
+		</script>
+		<script th:src="@{/admin/js/orderUpdateForm.js}" type="text/javascript">
+			
+		</script>
+		<script th:src="@{/admin/js/alertNotification.js}" th:inline="javascript">
+			
+		</script>
+	</th:block>
+</body>
+
+</html>

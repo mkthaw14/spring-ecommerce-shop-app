@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin-template}">
+
+<head>
+<title>DashBoard</title>
+
+<th:block layout:fragment="css">
+
+</th:block>
+</head>
+
+<body>
+
+	<div layout:fragment="content-body" class="container-fluid">
+
+		<div class="d-flex justify-content-between container-fluid ">
+			<div class="">
+				<!-- Page Heading -->
+				<h1 class="h3 mb-2 text-gray-800">Product Add</h1>
+			</div>
+			<div class="">
+				<a th:href="@{/products}" class="btn btn-success px-3">Back To Product List</a>
+			</div>
+		</div>
+		<div th:if="${operation == 'fail'}" class="alert alert-danger">
+			Operation fail!
+		</div>
+
+		<div class="container-fluid ">
+			<form th:action="@{/product/save}" method="post"
+				th:object="${product}" class="form col-5" enctype="multipart/form-data">
+				<div class="mb-3">
+					<div class="form-group">
+						<label for="exampleFormControlSelect1">Example select</label> 
+						<select
+							class="form-control" id="exampleFormControlSelect1" th:field="*{category}">
+							<th:block th:each="cat : ${categories}">
+								<option th:value="${cat.id}" th:text="${cat.name}"></option>
+							</th:block>
+						</select>
+					</div>
+				</div>
+				<div class="mb-3">
+					<label for="" class="form-label"></label> <input type="hidden"
+						th:field="*{id}" class="form-control" />
+				</div>
+				<div class="mb-3">
+					<label for="" class="form-label">Name</label> <input type="text"
+						th:field="*{name}" class="form-control" required="required" />
+				</div>
+				<div class="mb-3">
+					<label for="" class="form-label">Price</label> <input type="number"
+						th:field="*{price}" class="form-control" min="10000" max="500000" />
+				</div>
+				<div class="mb-3">
+					<div class="form-group">
+						<label for="exampleFormControlTextarea1">Description</label>
+						<textarea class="form-control" id="exampleFormControlTextarea1"
+							rows="3" th:field="*{description}" required="required"></textarea>
+					</div>
+				</div>
+				<div class="custom-file mb-3">
+					<input type="file" class="custom-file-input" id="customFile" name="upload_file" required="required">
+					<label class="custom-file-label" for="customFile">Choose
+						file</label>
+				</div>
+				<div class="mb-3">
+					<button class="btn btn-success" value="submit">Save</button>
+				</div>
+			</form>
+		</div>
+
+	</div>
+
+	<th:block layout:fragment="js">
+		<script th:src="@{/admin/js/alertNotification.js}" th:inline="javascript">
+		</script>
+	</th:block>
+</body>
+
+</html>

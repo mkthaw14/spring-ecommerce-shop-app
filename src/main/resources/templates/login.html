@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	layout:decorate="~{storefront-template}"
+	th:with="sub_title_1='login', sub_title_2='login'">
+
+<head>
+<title>Login</title>
+</head>
+<body>
+	<section layout:fragment="content-body" class="ftco-section">
+		<div class="container">
+			<div class="row d-flex justify-content-center">
+				<h3>Login</h3>
+			</div>
+			<hr />
+
+			<div class="row d-flex justify-content-center">
+				<form th:action="@{/shop/login}" method="post" class="form col-5">
+					<div class="mb-3" th:if="${param.error}">
+						<p class="alert alert-danger">Invalid email or password</p>
+					</div>
+					<div class="mb-3">
+						<label for="" class="form-label">Email</label> <input type="email"
+							class="form-control" placeholder="example@gmail.com"
+							name="username" />
+					</div>
+					<div class="mb-3">
+						<label for="" class="form-label">Password</label> <input type="password"
+							class="form-control" placeholder="password" 
+							name="password"/>
+					</div>
+					<div class="row d-flex justify-content-center">
+						<button class="btn btn-primary col-4 py-2">Login</button>
+					</div>
+
+				</form>
+			</div>
+
+		</div>
+	</section>
+
+	<th:block layout:fragment="js">
+		<script th:src="@{/app/js/cart.js}"></script>
+		<script th:src="@{/app/js/cartdetail.js}"></script>
+		<script th:src="@{/app/js/checkout.js}"></script>
+	</th:block>
+</body>
+</html>

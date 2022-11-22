@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin-template}">
+
+<head>
+<title>Category Add</title>
+
+<th:block layout:fragment="css">
+
+</th:block>
+</head>
+
+<body>
+
+	<div layout:fragment="content-body" class="container-fluid">
+
+		<div class="d-flex justify-content-between container-fluid ">
+			<div class=" ">
+				<!-- Page Heading -->
+				<h1 class="h3 mb-2 text-gray-800">Category Add</h1>
+			</div>
+			<div class="">
+				<a th:href="@{/categories}" class="btn btn-success px-3">Back To Category List</a>
+			</div>
+		</div>
+		<div th:if="${operation == 'fail'}" class="alert alert-danger">
+			Operation fail!
+		</div>
+
+		<div class="container-fluid ">
+			<form th:action="@{/category/save}" method="post"
+				th:object="${category}" class="form col-5" enctype="multipart/form-data">
+
+				<div class="mb-3">
+					<label for="" class="form-label"></label> <input type="hidden"
+						th:field="*{id}" class="form-control" />
+				</div>
+				<div class="mb-3">
+					<label for="" class="form-label">Name</label> <input type="text"
+						th:field="*{name}" class="form-control" required="required" />
+				</div>
+				<div class="custom-file mb-3">
+					<input type="file" class="custom-file-input" id="customFile" name="upload_file" required="required">
+					<label class="custom-file-label" for="customFile">Choose
+						file</label>
+				</div>
+				<div class="mb-3">
+					<button class="btn btn-success" value="submit">Save</button>
+				</div>
+			</form>
+		</div>
+
+	</div>
+
+	<th:block layout:fragment="js">
+		<script th:src="@{/admin/js/alertNotification.js}" th:inline="javascript">
+		</script>
+	</th:block>
+</body>
+
+</html>

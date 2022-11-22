@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin-template}">
+
+<head>
+<title>DashBoard</title>
+
+<th:block layout:fragment="css">
+
+</th:block>
+</head>
+
+<body>
+
+	<div layout:fragment="content-body" class="container-fluid">
+
+		<div class="d-flex justify-content-between container-fluid ">
+			<div class="">
+				<!-- Page Heading -->
+				<h1 class="h3 mb-2 text-gray-800">Editing Administrator Account</h1>
+			</div>
+			<div class="">
+				<a th:href="@{/user/admin}" class="btn btn-success px-3">Back To Profile</a>
+			</div>
+		</div>
+		<div th:if="${operation == 'fail'}" class="alert alert-danger operationNotifaction">Operation fail!</div>
+
+		<div class="container-fluid ">
+			<form th:action="@{/user/save}" method="post" th:object="${adminUser}" class="form col-5">
+				<div class="mb-3">
+					<input type="hidden" th:field="*{role}" class="form-control" required="required" />
+				</div>
+				<div class="mb-3">
+					<label for="" class="form-label">Name</label>
+					<input type="text" th:field="*{name}" class="form-control" required="required" />
+				</div>
+				<div class="mb-3">
+					<label for="" class="form-label">Email</label>
+					<input type="email" th:field="*{email}" class="form-control" required="required" />
+				</div>
+				<div class="mb-3">
+					<label for="" class="form-label">Phone</label>
+					<input type="text" th:field="*{phone}" class="form-control" required="required" />
+				</div>
+				<div class="mb-3">
+					<label for="" class="form-label">Address</label>
+					<input type="text" th:field="*{address}" class="form-control" required="required" />
+				</div>
+				<div class="mb-3">
+					<label for="" class="form-label">Old Password</label>
+					<input type="password" name = "old-password" class="form-control" required="required" />
+				</div>
+				<div class="mb-3">
+					<label for="" class="form-label">New Password</label>
+					<input type="password" name = "new-password" class="form-control" required="required" />
+				</div>
+				<div class="mb-3">
+					<button class="btn btn-success" value="submit">Save</button>
+				</div>
+			</form>
+		</div>
+
+	</div>
+
+	<th:block layout:fragment="js">
+		<script th:src="@{/admin/js/alertNotification.js}" th:inline="javascript">
+			
+		</script>
+	</th:block>
+</body>
+
+</html>

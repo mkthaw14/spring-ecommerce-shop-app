@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	layout:decorate="~{storefront-template}" th:with="sub_title_1='My Order', sub_title_2='My Order'">
+
+<head>
+
+<th:block layout:fragment="css">
+	<!-- Custom styles for this page -->
+</th:block>
+<title>My Order</title>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+<body>
+	<section layout:fragment="content-body" class="ftco-section">
+		<div class="my-order-content container-fluid">
+			<th:block th:each="o : ${myOrderList}">
+				<div class="row mb-3 d-flex justify-content-center" th:id="'accordion-' + ${o.id}">
+					<div class="col-sm-6">
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">
+									Order Number #
+									<span th:text="${o.id}"></span>
+								</h5>
+								<div class="px-3">
+									<div class="mb-3">
+										<div class="row text-dark font-weight-bold">
+											<div class="col-4 d-flex justify-content-start">
+												<div>Order Date</div>
+											</div>
+											<div class="col-4 d-flex justify-content-center">
+												<div>Order Status</div>
+											</div>
+											<div class="col-4 d-flex justify-content-end">
+												<div>Order Amount</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-4 d-flex justify-content-start">
+												<div th:text="${o.created_at}"></div>
+											</div>
+											<div class="col-4 d-flex justify-content-center">
+												<div th:text="${o.status}"></div>
+											</div>
+											<div class="col-4 d-flex justify-content-end">
+												<div th:text="${o.amount}"></div>
+											</div>
+										</div>
+
+									</div>
+
+									<div class="mb-3">
+										<div class="row text-dark font-weight-bold">
+											<div class="col-4 d-flex justify-content-start">
+												<div>Customer Name</div>
+											</div>
+											<div class="col-4 d-flex justify-content-center">
+												<div>Customer Email</div>
+											</div>
+											<div class="col-4 d-flex justify-content-end">
+												<div>Customer Phone</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-4 d-flex justify-content-start">
+												<div th:text="${o.customer.name}"></div>
+											</div>
+											<div class="col-4 d-flex justify-content-center">
+												<div th:text="${o.customer.email}"></div>
+											</div>
+											<div class="col-4 d-flex justify-content-end">
+												<div th:text="${o.customer.phone}"></div>
+											</div>
+										</div>
+									</div>
+									<div class="mb-3">
+										<div class="row text-dark font-weight-bold">
+											<div class="col-4 d-flex justify-content-start">
+												<div>Shipping Address</div>
+											</div>
+											<div class="col-4 d-flex justify-content-center">
+												<div>Shipping Customer</div>
+											</div>
+											<div class="col-4 d-flex justify-content-end">
+												<div>Shipping Phone</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-4 d-flex justify-content-start">
+												<div th:text="${o.shippingAddress}"></div>
+											</div>
+											<div class="col-4 d-flex justify-content-center">
+												<div th:text="${o.shippingName}"></div>
+											</div>
+											<div class="col-4 d-flex justify-content-end">
+												<div th:text="${o.shippingPhone}"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="mt-3" id="headingOne">
+									<button class="btn btn-primary btn-collapse" type="button" data-toggle="collapse" th:data-id="${o.id}" th:data-target="'#div-collapse' + ${o.id}" aria-expanded="false"
+										aria-controls="collapseOne">View Detail</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div th:id="'div-collapse' + ${o.id}" class="collapse" aria-labelledby="headingOne" data-parent="">
+					<div class="">
+						<div class="row">
+							<table th:id="'table-' + ${o.id}" class="col-md-2 table mx-auto ">
+								<thead class="thead-primary">
+									<tr class="">
+										<th>Product ID</th>
+										<th>Product Name</th>
+										<th>Quantity</th>
+									</tr>
+								</thead>
+								<tbody >
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</th:block>
+
+		</div>
+
+
+	</section>
+
+	<th:block layout:fragment="js">
+		<script th:src="@{/app/js/cart.js}"></script>
+		<script th:src="@{/app/js/cartdetail.js}"></script>
+		<script th:src="@{/app/js/checkout.js}"></script>
+		<script th:src="@{/app/js/my-order-item.js}"></script>
+	</th:block>
+</body>
+</html>
